@@ -1,39 +1,51 @@
-# Automatically build the project and run any configured tests for every push
-# and submitted pull request. This can help catch issues that only occur on
-# certain platforms or Java versions, and provides a first line of defence
-# against bad commits.
-
-name: build
-on: [pull_request, push]
+name: Mod Build
+on: [push, pull_request, workflow_dispatch]
 
 jobs:
   build:
     strategy:
       matrix:
-        # Use these Java versions
-        java: [
-          17,    # Current Java LTS & minimum supported by Minecraft
-        ]
-        # and run on both Linux and Windows
-        os: [ubuntu-20.04, windows-2022]
+        java: [21]
+        os: [ubuntu-latest]
+
     runs-on: ${{ matrix.os }}
     steps:
-      - name: checkout repository
-        uses: actions/checkout@v2
-      - name: validate gradle wrapper
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Validate Gradle Wrapper
         uses: gradle/wrapper-validation-action@v1
-      - name: setup jdk ${{ matrix.java }}
-        uses: actions/setup-java@v1
+
+      - name: Setup Java
+        uses: actions/setup-java@v3.6.0
         with:
+          distribution: 'zulu'
           java-version: ${{ matrix.java }}
-      - name: make gradle wrapper executable
-        if: ${{ runner.os != 'Windows' }}
+
+      - name: Make Gradle Wrapper Executable
         run: chmod +x ./gradlew
-      - name: build
-        run: ./gradlew build
-      - name: capture build artifacts
-        if: ${{ runner.os == 'Linux' && matrix.java == '17' }} # Only upload artifacts built from latest java on one OS
-        uses: actions/upload-artifact@v2
+
+      - name: Setup Cache
+        uses: actions/cache@v3
         with:
-          name: Artifacts
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
+
+      - name: Build with Gradle
+        run: ./gradlew build --info
+        continue-on-error: false  # 根据需要决定是否添加此选项
+
+      - name: Find correct JAR
+        id: find-jar
+        run: |
+          output=$(ls build/libs/*.jar | grep -v '-dev\|-sources' | head -1)
+          echo "jarname=$output" >> $GITHUB_OUTPUT
+
+      - name: Update Build Artifacts
+        if: success()
+        uses: actions/upload-artifact@v3
+        with:
+          name: build-Mod
           path: build/libs/

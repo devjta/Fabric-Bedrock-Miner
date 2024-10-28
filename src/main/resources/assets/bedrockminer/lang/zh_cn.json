@@ -1,14 +1,27 @@
 {
-  "bedrockminer": "",
-  "bedrockminer.toggle.on": "\n§7╔════════════════════════════════╗§r\n§7║§r                                                                        §7║§r\n§7║§r Bedrock Miner已启动！左键基岩即可自动破除基岩。                 §7║§r\n§7║§r                                                                        §7║§r\n§7╚════════  Author: LXYan  作者：LXYan  ════════╝§r\n",
-  "bedrockminer.toggle.off": "Bedrock Miner已关闭。",
+  "bedrockminer": "Bedrock Miner",
+  "bedrockminer.debug.on": "§2启动调适模式成功!",
+  "bedrockminer.debug.off": "§7关闭调适模式成功!",
+  "bedrockminer.toggle.on": "§2Bedrock Miner 启动成功！",
+  "bedrockminer.toggle.off": "§7Bedrock Miner 关闭成功。",
   "bedrockminer.warn.multiplayer": "§7看起来你好像是在服务器使用Bedrock Miner？§r\n§7在使用本mod前请先征询其他玩家的意见。§r",
-  "bedrockminer.fail.place.piston": "无法放置活塞！",
+  "bedrockminer.fail.place.piston": "无法放置活塞！（该位置没有放置条件或放置点有实体或玩家）",
   "bedrockminer.fail.place.redstonetorch": "无法放置红石火把！",
+  "bedrockminer.fail.place.slimeBlock": "无法放置粘液块！（该位置没有放置条件或放置点有实体或玩家）",
   "bedrockminer.fail.missing.survival": "仅限生存模式！",
   "bedrockminer.fail.missing.piston": "活塞不够啦！",
   "bedrockminer.fail.missing.redstonetorch": "红石火把不够啦！",
   "bedrockminer.fail.missing.slime": "黏液块不够啦！",
-  "bedrockminer.fail.missing.instantmine": "无法秒破活塞！请确保效率Ⅴ+急迫Ⅱ"
-
+  "bedrockminer.fail.missing.instantmine": "无法秒破活塞！请确保效率Ⅴ+急迫Ⅱ",
+  "bedrockminer.command.block.whitelist.add": "§7添加白名单方块 \"%blockName%\" 成功!",
+  "bedrockminer.command.block.whitelist.remove": "§7删除白名单方块 \"%blockName%\" 成功!",
+  "bedrockminer.command.block.blacklist.add": "§7添加黑名单方块 \"%blockName%\" 成功!",
+  "bedrockminer.command.block.blacklist.remove": "§7删除黑名单方块 \"%blockName%\" 成功!",
+  "bedrockminer.command.exception.invalidString": "§7输入的 \"%input%\" 字符串错误！",
+  "bedrockminer.command.task.limit": "§2成功将任务执行上限调整为: %limit%",
+  "bedrockminer.command.task.clear": "§2成功将任务缓存清空！",
+  "bedrockminer.command.disable.on": "§2禁用成功！",
+  "bedrockminer.command.disable.off": "§7启用成功！",
+  "bedrockminer.command.task.mode.set": "§7设置 %mode% 成功！",
+  "bedrockminer.handle.seek": "当前位置(%BlockPos%)没有可以执行的放置方案"
 }

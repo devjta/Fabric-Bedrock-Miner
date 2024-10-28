@@ -6,6 +6,7 @@ package yan.lx.bedrockminer.utils;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.effect.StatusEffectUtil;
@@ -15,6 +16,8 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.ItemConvertible;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.packet.c2s.play.UpdateSelectedSlotC2SPacket;
+import net.minecraft.registry.RegistryKeys;
+import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.registry.tag.FluidTags;
 
 public class InventoryManager {
@@ -24,7 +27,7 @@ public class InventoryManager {
 
         int i = playerInventory.getSlotWithStack(new ItemStack(item));
 
-        if ("diamond_pickaxe".equals(item.toString())) {
+        if ("minecraft:diamond_pickaxe".equals(item.toString())) {
             i = getEfficientTool(playerInventory);
         }
 
@@ -36,6 +39,8 @@ public class InventoryManager {
             }
             minecraftClient.getNetworkHandler().sendPacket(new UpdateSelectedSlotC2SPacket(playerInventory.selectedSlot));
             return true;
+        }else{
+            Messager.rawchat("No valid item found " + item);
         }
         return false;
     }
@@ -67,8 +72,9 @@ public class InventoryManager {
         ItemStack stack = player.getInventory().getStack(slot);
 
         float f = stack.getMiningSpeedMultiplier(block);
+        RegistryWrapper.Impl<Enchantment> impl = player.getRegistryManager().getWrapperOrThrow(RegistryKeys.ENCHANTMENT);
         if (f > 1.0F) {
-            int i = EnchantmentHelper.getLevel(Enchantments.EFFICIENCY, stack);
+            int i = EnchantmentHelper.getLevel(impl.getOrThrow(Enchantments.EFFICIENCY), stack);
             ItemStack itemStack = player.getInventory().getStack(slot);
             if (i > 0 && !itemStack.isEmpty()) {
                 f += (float) (i * i + 1);
@@ -99,7 +105,7 @@ public class InventoryManager {
             f *= k;
         }
 
-        if (player.isSubmergedIn(FluidTags.WATER) && !EnchantmentHelper.hasAquaAffinity(player)) {
+        if (player.isSubmergedIn(FluidTags.WATER) && EnchantmentHelper.getEquipmentLevel(impl.getOrThrow(Enchantments.AQUA_AFFINITY), player) == 0) {
             f /= 5.0F;
         }
 

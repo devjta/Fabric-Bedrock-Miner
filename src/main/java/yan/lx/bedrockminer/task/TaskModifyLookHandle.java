@@ -26,7 +26,7 @@ public class TaskModifyLookHandle {
     private static PlayerMoveC2SPacket getLookAndOnGroundPacket(ClientPlayerEntity player) {
         var yaw = modifyYaw ? TaskModifyLookHandle.yaw : player.getYaw();
         var pitch = modifyPitch ? TaskModifyLookHandle.pitch : player.getPitch();
-        return new PlayerMoveC2SPacket.LookAndOnGround(yaw, pitch, player.isOnGround());
+        return new PlayerMoveC2SPacket.LookAndOnGround(yaw, pitch, player.isOnGround(), player.horizontalCollision);
     }
 
     public static void set(float yaw, float pitch) {

@@ -224,9 +224,9 @@ public class InventoryManagerUtils {
 
 
         // 如果玩家在水中并且没有"水下速掘"附魔，则减缓破坏速度
-        toolSpeed *= (float) player.getAttributeValue(EntityAttributes.PLAYER_BLOCK_BREAK_SPEED);
+        toolSpeed *= (float) player.getAttributeValue(EntityAttributes.BLOCK_BREAK_SPEED);
         if (player.isSubmergedIn(FluidTags.WATER)) {
-            toolSpeed *= (float) Objects.requireNonNull(player.getAttributeInstance(EntityAttributes.PLAYER_SUBMERGED_MINING_SPEED)).getValue();
+            toolSpeed *= (float) Objects.requireNonNull(player.getAttributeInstance(EntityAttributes.SUBMERGED_MINING_SPEED)).getValue();
         }
 
         // 如果玩家不在地面上，则减缓破坏速度

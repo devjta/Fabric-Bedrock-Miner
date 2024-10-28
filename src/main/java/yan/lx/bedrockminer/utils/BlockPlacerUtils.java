@@ -63,7 +63,7 @@ public class BlockPlacerUtils {
             InventoryManagerUtils.switchToItem(items);
         }
         // 发送修改视角数据包
-        networkHandler.sendPacket(new PlayerMoveC2SPacket.LookAndOnGround(yaw, pitch, player.isOnGround()));
+        networkHandler.sendPacket(new PlayerMoveC2SPacket.LookAndOnGround(yaw, pitch, player.isOnGround(), player.horizontalCollision));
         // 发送交互方块数据包
         interactionManager.interactBlock(player, Hand.MAIN_HAND, hitResult);
     }

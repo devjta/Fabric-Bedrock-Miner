@@ -16,12 +16,9 @@ import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.network.packet.c2s.play.PickFromInventoryC2SPacket;
 import net.minecraft.network.packet.c2s.play.UpdateSelectedSlotC2SPacket;
 import net.minecraft.registry.tag.FluidTags;
-import org.jetbrains.annotations.Nullable;
-
-import java.util.HashMap;
+import net.minecraft.util.math.BlockPos;
 import java.util.Objects;
 
 
@@ -70,7 +67,7 @@ public class InventoryManagerUtils {
         if (PlayerInventory.isValidHotbarIndex(slot)) {
             playerInventory.selectedSlot = slot;
         } else {
-            interactionManager.pickFromInventory(slot);
+            interactionManager.pickItemFromBlock(BlockPos.fromLong(slot), true);
         }
         networkHandler.sendPacket(new UpdateSelectedSlotC2SPacket(playerInventory.selectedSlot)); // 发送更新手持物品的数据包
 

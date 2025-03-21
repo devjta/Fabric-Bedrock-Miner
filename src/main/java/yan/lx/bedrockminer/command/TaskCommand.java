@@ -66,7 +66,7 @@ public class TaskCommand extends BaseCommand {
     private Text getModeText(boolean mode, Direction... directions) {
         List<String> list = new ArrayList<>();
         for (Direction direction : directions) {
-            list.add(direction.getName());
+            list.add(direction.asString());
         }
         return Text.literal(String.format("%s: %s", String.join(", ", list), mode));
     }
